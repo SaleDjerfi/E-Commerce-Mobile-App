@@ -2,8 +2,11 @@ const express = require('express');
 const app = express();
 const morgan = require('morgan');
 const mongoose = require('mongoose');
-
+const cors = require('cors');
 require('dotenv/config');
+
+app.use(cors());
+app.options('*', cors());
 
 // Middleware
 app.use(express.json());
@@ -24,7 +27,11 @@ app.use(`${api}/orders`, ordersRouter);
 
 // Database
 mongoose
-  .connect(process.env.CONNECTION_STRING)
+  .connect(process.env.CONNECTION_STRING, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    dbName: 'eshop-database',
+  })
   .then(() => {
     console.log('Database connection is ready...');
   })
