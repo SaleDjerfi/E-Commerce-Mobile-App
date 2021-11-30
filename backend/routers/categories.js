@@ -3,12 +3,23 @@ const router = express.Router();
 const { Category } = require('../models/category');
 
 router.get('/', async (req, res) => {
-  const categoryList = await Product.find();
+  const categoryList = await Category.find();
 
   if (!categoryList) {
     res.status(500).json({ success: false });
   }
-  res.send(categoryList);
+  res.status(200).send(categoryList);
+});
+
+router.get('/:id', async (req, res) => {
+  const category = await Category.findById(req.params.id);
+
+  if (!category) {
+    res
+      .status(500)
+      .json({ message: 'The catrgory with the given ID was not found' });
+  }
+  res.status(200).send(category);
 });
 
 router.post('/', async (req, res) => {
