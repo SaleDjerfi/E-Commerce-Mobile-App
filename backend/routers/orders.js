@@ -3,7 +3,7 @@ const router = express.Router();
 const { Order } = require('../models/order');
 
 router.get('/', async (req, res) => {
-  const orderList = await Product.find();
+  const orderList = await Order.find();
 
   if (!orderList) {
     res.status(500).json({ success: false });
