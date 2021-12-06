@@ -11,7 +11,7 @@ const storage = multer.diskStorage({
   },
   filename: function (req, file, cb) {
     const fileName = file.originalname.split(' ').join('-');
-    cb(null, fileName + '-' + Date.now);
+    cb(null, `${fileName}-${Date.now()}`);
   },
 });
 
@@ -43,8 +43,9 @@ router.get(`/:id`, async (req, res) => {
 router.post('/', uploadOptions.single('image'), async (req, res) => {
   const category = await Category.findById(req.body.category);
   if (!category) return res.status(400).send('Invalid Category');
+
   const fileName = req.file.filename;
-  const basePath = `${req.protocol}://${req.get('host')}/public/upload`;
+  const basePath = `${req.protocol}://${req.get('host')}/public/uploads/`;
 
   let product = new Product({
     name: req.body.name,
