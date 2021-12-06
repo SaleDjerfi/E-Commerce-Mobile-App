@@ -105,7 +105,7 @@ router.put('/:id', uploadOptions.single('image'), async (req, res) => {
     imagepath = product.image;
   }
 
-  const product = await Product.findByIdAndUpdate(
+  const updatedProduct = await Product.findByIdAndUpdate(
     req.params.id,
     {
       name: req.body.name,
@@ -123,9 +123,10 @@ router.put('/:id', uploadOptions.single('image'), async (req, res) => {
     { new: true }
   );
 
-  if (!product) return res.status(500).send('The product cannot be updated');
+  if (!updatedProduct)
+    return res.status(500).send('The product cannot be updated');
 
-  res.send(product);
+  res.send(updatedProduct);
 });
 
 router.delete('/:id', (req, res) => {
