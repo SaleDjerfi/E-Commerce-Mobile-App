@@ -43,7 +43,7 @@ const orderSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   },
-  phone: {
+  dateOrdered: {
     type: Date,
     default: Date.now,
   },
